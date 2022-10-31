@@ -89,7 +89,7 @@ Transform = {
                         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) 
     ]) }
 
-Model = timm.create_model('tf_efficientnet_b4_ns', pretrained=True, num_classes=len(Df_classes))
-# Model = timm.create_model('efficientnet_b4', pretrained=True, num_classes=len(Df_classes))
+# Model = timm.create_model('tf_efficientnet_b4_ns', pretrained=True, num_classes=len(Df_classes))
+Model = timm.create_model('efficientnet_b4', pretrained=True, num_classes=len(Df_classes))
 # Model = timm.create_model('resnet50', pretrained=True, num_classes=len(Df_classes))
 
