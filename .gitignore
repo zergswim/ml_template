@@ -1,2 +1,4 @@
 __pycache__
+.git
 .ipynb_checkpoints
+.vscode
