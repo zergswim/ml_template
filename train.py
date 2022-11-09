@@ -10,7 +10,7 @@ MyDataset = pre.MyDataset
 model = pre.Model
 
 k_fold_num = 10
-batch_size = 32 #len(df_classes)
+batch_size = 64 #len(df_classes)
 num_epochs = 10
 lr = 0.00005
 
@@ -19,8 +19,10 @@ lr = 0.00005
 # class_weight = [1-(x/sum(class_num)) for x in class_num]
 # tensor_weights = torch.FloatTensor(class_weight).to(device='cuda:0')
 
-df = dfms[['mask','gender','age','img_path_full', 'label']].copy()
-X = dfms[['mask','gender','age','img_path_full']].values.tolist()
+# df = dfms[['mask','gender','age','img_path_full', 'label']].copy()
+# X = dfms[['mask','gender','age','img_path_full']].values.tolist()
+df = dfms[['img_path', 'label']].copy()
+X = dfms[['img_path']].values.tolist()
 y = dfms['label'].values.tolist()
 
 # Train for kfold
@@ -28,8 +30,8 @@ kfold = StratifiedKFold(n_splits=k_fold_num)
 
 for i, (train_index, valid_index) in enumerate(kfold.split(X, y)):
     print(f"\n** Fold_{i} **")
-    train_sets = MyDataset(df.iloc[train_index], trfm['train'], df_classes, 'all')
-    valid_sets = MyDataset(df.iloc[valid_index], trfm['valid'], df_classes, 'all')
+    train_sets = MyDataset(df.iloc[train_index], trfm['train'], df_classes)
+    valid_sets = MyDataset(df.iloc[valid_index], trfm['valid'], df_classes)
     ml = ML(trfm, model, torch.nn.CrossEntropyLoss(), torch.optim.Adam, lr=lr)
 #     ml = ML(transform, model, torch.nn.CrossEntropyLoss(weight=tensor_weights), torch.optim.Adam, lr=lr)
     ml.Data(train_sets, valid_sets, valid_sets, batch_size=batch_size)

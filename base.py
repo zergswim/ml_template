@@ -63,6 +63,7 @@ class ML():
                 with torch.set_grad_enabled(phase == 'train'):
                     running_loss, running_corrects = 0.0, 0
                     for inputs, labels in self.dataloaders[phase]:
+                        print(labels.shape)
 #                     for inputs, labels in tqdm(self.dataloaders[phase]):
                         inputs, labels = inputs.to(self.device), labels.to(self.device)
                         outputs = self.model(inputs)

@@ -12,10 +12,10 @@ model = pre.Model
 
 k_fold_num = 10
 
-DIR = '/opt/ml/input/data'
-df_test = pd.read_csv(DIR+'/eval/info.csv')
+DIR = '/opt/ml/ML/art/data'
+df_test = pd.read_csv(DIR+'/sample_submission.csv')
 df_test['label'] = 0
-df_test['img_path_full'] = DIR+'/eval/images/' +  df_test['ImageID']
+df_test['img_path'] = DIR+'/test/' +  df_test['id']
 
 len_img, len_classes = len(df_test), len(df_classes)
 print(len_img, len_classes)
@@ -49,8 +49,8 @@ for i in range(k_fold_num):
 answers = [np.argmax(r/len_classes) for r in rst]
 
 submit = pd.DataFrame()
-submit["ImageID"] = df_test["ImageID"]
-submit["ans"] = answers
+submit["id"] = df_test["id"]
+submit["artist"] = df_classes[answers]
 submit.to_csv('kflod10.csv', index=False)
 
 submit['ans'].value_counts()
